@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireNext - AI Internship & Job Recommender</title>
+    <meta name="description" content="Find the most relevant internships and job opportunities based on your skills and interests with our AI-based matching system.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body data-theme="dark">
+
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="nav-brand">
+            <i data-lucide="rocket" class="brand-icon"></i>
+            <span>HireNext</span>
+        </div>
+        <div class="nav-right">
+            <button id="theme-toggle" class="btn btn-icon" title="Toggle Theme"><i data-lucide="sun"></i></button>
+            <div id="nav-auth-buttons">
+                <button id="nav-login-btn" class="btn btn-outline btn-glass">Login</button>
+            </div>
+            <div id="nav-user-menu" class="hidden">
+                <button id="nav-notif-btn" class="btn btn-icon notif-badge" title="Notifications"><i data-lucide="bell"></i><span class="badge">3</span></button>
+                <div class="user-avatar">
+                    <img src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff" alt="User" id="user-avatar-img">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation (Hidden by default, shown after login) -->
+        <aside class="sidebar hidden" id="sidebar">
+            <ul class="sidebar-menu">
+                <li class="menu-item active" data-view="dashboard">
+                    <i data-lucide="layout-dashboard"></i> <span>Dashboard</span>
+                </li>
+                <li class="menu-item" data-view="recommendations" data-tab="internship">
+                    <i data-lucide="graduation-cap"></i> <span>Recommend Internship</span>
+                </li>
+                <li class="menu-item" data-view="recommendations" data-tab="job">
+                    <i data-lucide="briefcase"></i> <span>Recommend Jobs</span>
+                </li>
+                <li class="menu-item" data-view="profile">
+                    <i data-lucide="user"></i> <span>Profile</span>
+                </li>
+                <li class="menu-item" data-view="notifications">
+                    <i data-lucide="bell"></i> <span>Notifications</span>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="sidebar-logout-btn" class="btn btn-full btn-outline"><i data-lucide="log-out"></i> Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Welcome View -->
+            <section id="view-welcome" class="view active">
+                <div class="hero glass-panel">
+                    <div class="hero-content">
+                        <div class="hero-icon-wrapper">
+                            <i data-lucide="sparkles" class="hero-icon"></i>
+                        </div>
+                        <h1>Welcome to <span class="highlight">HireNext</span></h1>
+                        <p class="hero-desc">Your smart web platform that helps you find the most relevant internships and job opportunities based on your skills and interests.</p>
+                        <button id="btn-get-started" class="btn btn-primary btn-large glow-effect">Get Started <i data-lucide="arrow-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Auth View -->
+            <section id="view-auth" class="view hidden">
+                <div class="auth-wrapper">
+                    <!-- Login -->
+                    <div class="auth-card glass-panel" id="login-container">
+                        <div class="auth-header">
+                            <h2>Welcome Back</h2>
+                            <p>Login to find your next opportunity</p>
+                        </div>
+                        <form id="login-form">
+                            <div class="form-group">
+                                <label for="login-username">Username</label>
+                                <div class="input-wrapper">
+                                    <i data-lucide="user" class="input-icon"></i>
+                                    <input type="text" id="login-username" placeholder="Enter your username" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Password</label>
+                                <div class="input-wrapper">
+                                    <i data-lucide="lock" class="input-icon"></i>
+                                    <input type="password" id="login-password" placeholder="Enter your password" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full glow-effect">Login</button>
+                        </form>
+
+                        <div class="auth-switch">
+                            <a href="#" id="go-to-signup">Don't have an account? Sign Up</a>
+                        </div>
+                    </div>
+
+                    <!-- Signup -->
+                    <div class="auth-card glass-panel hidden" id="signup-container">
+                        <div class="auth-header">
+                            <h2>Create Account</h2>
+                            <p>Join HireNext today</p>
+                        </div>
+                        <form id="signup-form">
+                            <div class="form-group">
+                                <label for="signup-username">Username</label>
+                                <div class="input-wrapper">
+                                    <i data-lucide="user" class="input-icon"></i>
+                                    <input type="text" id="signup-username" placeholder="Choose a username" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-email">Email</label>
+                                <div class="input-wrapper">
+                                    <i data-lucide="mail" class="input-icon"></i>
+                                    <input type="email" id="signup-email" placeholder="Enter your email" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-password">Password</label>
+                                <div class="input-wrapper">
+                                    <i data-lucide="lock" class="input-icon"></i>
+                                    <input type="password" id="signup-password" placeholder="Create a password" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-full glow-effect">Sign Up</button>
+                        </form>
+
+                        <div class="auth-switch">
+                            <a href="#" id="go-to-login">Already have an account? Login</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard View -->
+            <section id="view-dashboard" class="view hidden">
+                <div class="page-header">
+                    <h2>Welcome, <span id="dashboard-username" class="highlight">User</span>! 👋</h2>
+                    <p>Let's find the best opportunities tailored just for you.</p>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <!-- User Input Form -->
+                    <div class="dashboard-card glass-panel main-input-card">
+                        <h3><i data-lucide="target"></i> Your Preferences</h3>
+                        <form id="preference-form">
+                            <div class="form-group">
+                                <label for="skills">Key Skills (comma-separated)</label>
+                                <textarea id="skills" placeholder="e.g. JavaScript, React, Python, UI Design" rows="2" required></textarea>
+                            </div>
+                            
+                            <div class="form-group proficiency-group">
+                                <label for="proficiency">Overall Skill Proficiency (%)</label>
+                                <div class="slider-wrapper">
+                                    <input type="range" id="proficiency" min="10" max="100" value="70" class="slider">
+                                    <span id="proficiency-value">70%</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="interests">Area of Interest</label>
+                                <input list="interest-options" id="interests" required class="glass-input" placeholder="e.g. Data Analyst, Software Engineer">
+                                <datalist id="interest-options">
+                                    <option value="Software Engineer">
+                                    <option value="Data Analyst">
+                                    <option value="Data Science">
+                                    <option value="Digital Marketing">
+                                    <option value="UI/UX Design">
+                                    <option value="Product Management">
+                                </datalist>
+                            </div>
+
+                            <div class="action-buttons">
+                                <button type="button" id="btn-rec-internships" class="btn btn-primary glow-effect">
+                                    <i data-lucide="graduation-cap"></i> Recommend Internships
+                                </button>
+                                <button type="button" id="btn-rec-jobs" class="btn btn-secondary glow-effect">
+                                    <i data-lucide="briefcase"></i> Recommend Jobs
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Side Widgets -->
+                    <div class="dashboard-widgets">
+                        <div class="dashboard-card glass-panel stats-card">
+                            <h3><i data-lucide="activity"></i> Profile Strength</h3>
+                            <div class="progress-circle-wrapper">
+                                <svg class="progress-ring" width="120" height="120">
+                                    <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                                    <circle class="progress-ring__circle" stroke="var(--primary-color)" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                                </svg>
+                                <div class="progress-text">75%</div>
+                            </div>
+                            <p class="text-center mt-2" style="font-size: 0.9rem; color: var(--text-muted);">Complete your profile to get better matches.</p>
+                        </div>
+
+                        <div class="dashboard-card glass-panel saved-items-card mt-3">
+                            <h3><i data-lucide="bookmark"></i> Saved Opportunities</h3>
+                            <div id="saved-items-container" class="saved-items-list">
+                                <p class="empty-state">No saved opportunities yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommendations View -->
+            <section id="view-recommendations" class="view hidden">
+                <div class="page-header flex-between">
+                    <div>
+                        <h2>AI Recommendations</h2>
+                        <p>Powered by our smart matching algorithm.</p>
+                    </div>
+                    <button class="btn btn-outline btn-glass btn-small" id="back-to-dashboard">
+                        <i data-lucide="arrow-left"></i> Go Back
+                    </button>
+                </div>
+                
+                <div class="tabs glass-tabs">
+                    <button class="tab-btn active" data-type="job">Jobs</button>
+                    <button class="tab-btn" data-type="internship">Internships</button>
+                </div>
+
+                <div class="filter-bar">
+                    <div class="search-box glass-panel">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="search-jobs" placeholder="Search title or company...">
+                    </div>
+                </div>
+
+                <!-- Loading Spinner -->
+                <div id="loading-spinner" class="loading-container hidden">
+                    <div class="spinner"></div>
+                    <p>Analyzing skills and fetching matches...</p>
+                </div>
+
+                <div id="results-container" class="results-grid">
+                    <!-- Cards injected via JS -->
+                </div>
+                
+                <div id="no-results" class="no-results glass-panel hidden">
+                    <i data-lucide="frown" class="no-results-icon"></i>
+                    <h3>No perfect matches found</h3>
+                    <p>Try adjusting your skills or selecting a different area of interest.</p>
+                </div>
+            </section>
+
+            <!-- Profile View -->
+            <section id="view-profile" class="view hidden">
+                <div class="page-header">
+                    <h2>Your Profile</h2>
+                    <p>Manage your personal information and resume.</p>
+                </div>
+                <div class="profile-card glass-panel">
+                    <form id="user-profile-form">
+                        <div class="profile-grid">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="profile-name" value="Jane Doe">
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" id="profile-email" value="jane@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="tel" id="profile-phone" placeholder="+1 234 567 8900">
+                            </div>
+                            <div class="form-group">
+                                <label>Degree</label>
+                                <input type="text" id="profile-degree" placeholder="B.S. Computer Science">
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Address</label>
+                                <input type="text" id="profile-address" placeholder="City, State, Country">
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Project Details</label>
+                                <textarea id="profile-projects" rows="3" placeholder="Briefly describe your recent projects..."></textarea>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Resume Upload</label>
+                                <div class="file-upload" onclick="document.getElementById('profile-resume').click()">
+                                    <i data-lucide="upload-cloud"></i>
+                                    <span>Drag & drop your resume or <span class="highlight">browse</span></span>
+                                    <input type="file" id="profile-resume" hidden>
+                                </div>
+                                <p id="resume-file-name" style="margin-top: 10px; font-size: 0.9em; color: var(--primary-color); text-align: center;"></p>
+                            </div>
+                        </div>
+                        <div class="form-actions" style="margin-top: 1.5rem; text-align: right;">
+                            <button type="button" id="save-profile-btn" class="btn btn-primary glow-effect">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Notifications View -->
+            <section id="view-notifications" class="view hidden">
+                <div class="page-header">
+                    <h2>Notifications</h2>
+                    <p>Stay updated with new opportunities.</p>
+                </div>
+                <div class="notifications-list glass-panel">
+                    <div class="notification-item unread">
+                        <div class="notif-icon"><i data-lucide="briefcase"></i></div>
+                        <div class="notif-content">
+                            <h4>New match for "Frontend Developer"</h4>
+                            <p>TechCorp just posted a job that matches 90% of your skills.</p>
+                            <span class="time">2 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="notification-item unread">
+                        <div class="notif-icon"><i data-lucide="graduation-cap"></i></div>
+                        <div class="notif-content">
+                            <h4>Internship Opportunity</h4>
+                            <p>StartupX is looking for a Software Engineering Intern.</p>
+                            <span class="time">5 hours ago</span>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                        <div class="notif-icon"><i data-lucide="check-circle"></i></div>
+                        <div class="notif-content">
+                            <h4>Profile updated</h4>
+                            <p>Your profile information was saved successfully.</p>
+                            <span class="time">1 day ago</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

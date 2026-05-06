@@ -1,0 +1,9 @@
+frontend
+
+npm start
+
+backend
+
+npm run dev
+
+http://localhost:5000
